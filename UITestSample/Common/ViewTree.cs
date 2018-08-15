@@ -1,4 +1,4 @@
-﻿namespace SogetiViewAutomation
+﻿namespace Pintope.ViewAutomation
 {
     using System;
     using System.Threading;
@@ -14,10 +14,10 @@
 
 
         /// <summary>
-        /// Finds the first occurrence of a child node based on two conditions (second one may be null) and use a pattern if provided.
+        /// Finds the first occurrence of a child node based on an array of conditions and uses a pattern, if provided.
         /// </summary>
         /// <param name="node">The automation element.</param>
-        /// <param name="conditions">Array of condition.</param>
+        /// <param name="conditions">Array of conditions.</param>
         /// <param name="pattern">The pattern to be used.</param>
         /// <param name="value">In case of ValuePattern, the value to be set.</param>
         /// <returns>The pattern retrieved from the node.</returns>
@@ -36,10 +36,10 @@
         }
 
         /// <summary>
-        /// Finds the child node at index "n" and use a pattern if provided.
+        /// Finds the child node at index "n" and uses a pattern, if provided.
         /// </summary>
         /// <param name="node">The automation element.</param>
-        /// <param name="index">The index.</param>
+        /// <param name="index">The index (1-based).</param>
         /// <param name="usePattern">Whether a pattern will be provided and used.</param>
         /// <param name="pattern">The pattern.</param>
         /// <param name="value">In case of ValuePattern, the value to be set.</param>
@@ -65,7 +65,7 @@
         }
 
         /// <summary>
-        /// Gets the next sibling node and use a pattern if provided.
+        /// Gets the next sibling node and uses a pattern, if provided.
         /// </summary>
         /// <param name="node">The automation element.</param>
         /// <param name="usePattern">Whether a pattern will be provided and used.</param>
@@ -88,7 +88,7 @@
         }
 
         /// <summary>
-        /// Finds all occurrence of child nodes based on a list of conditions.
+        /// Finds all occurrence of child nodes based on an array of conditions.
         /// </summary>
         /// <param name="node">Automation element.</param>
         /// <param name="conditions">Array of conditions.</param>
@@ -107,7 +107,7 @@
         }
 
         /// <summary>
-        /// Set focus on an automation element.
+        /// Set focus on an element.
         /// </summary>
         /// <param name="node">The automation element.</param>
         public static void Focus(AutomationElement node)
@@ -117,7 +117,7 @@
         }
 
         /// <summary>
-        /// Use a pattern on an automation element.
+        /// uses a pattern on an automation element.
         /// </summary>
         /// <param name="node">The automation element.</param>
         /// <param name="pattern">The pattern.</param>

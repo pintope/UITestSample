@@ -8,11 +8,11 @@
         Height="240" 
         Width="200"
         Topmost="True"        
-        Title="Functional Tests" >
+        Title="" >
     <Grid>
         <StackPanel Orientation="Vertical">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="30" Background="Gray">
-                <Label FontSize="15" Content="Pruebas Funcionales" Foreground="White" Width="200" HorizontalContentAlignment="Center"/>
+                <Label FontSize="15" Content="UI Tests" Foreground="White" Width="200" HorizontalContentAlignment="Center"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 10 0 0">
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Height="100">
@@ -24,7 +24,7 @@
                 </StackPanel>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 30 0 0">
-                <Button x:Name="Run" FontSize="12" Content="EJECUTAR PRUEBAS" Width="165" Click="RunUITests"/>
+                <Button x:Name="Run" FontSize="12" Content="RUN TESTS" Width="165" Click="RunUITests"/>
             </StackPanel>
         </StackPanel>
     </Grid>

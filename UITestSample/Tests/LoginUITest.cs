@@ -1,14 +1,14 @@
-﻿namespace Tests
+﻿namespace UITestSample.Tests
 {
     using System;
     using System.Threading;
     using System.Configuration;
     using System.Windows.Automation;
-    using SogetiViewAutomation;
+    using Pintope.ViewAutomation;
 
 
     /// <summary>
-    /// Proxy que representa la ventana de la aplicación SEO.
+    /// Login test.
     /// </summary>
     public class LoginUITest
     {
@@ -28,30 +28,30 @@
 
 
         /// <summary>
-        /// Ejecuta la prueba funcional.
+        /// Runs the login test.
         /// </summary>
         public bool Login()
         {
             try
             {
-                // Busca e invoca el botón "Iniciar sesión".
+                // Looks for and invoke the login button.
                 AutomationElement node = GetAnchor2(true);
-                ViewTree.RetrieveChildNodePatternByCondition(ref node, new Condition[] { new PropertyCondition(AutomationElement.NameProperty, "Iniciar sesión") }, true, Pattern.Invoke);
+                ViewTree.RetrieveChildNodePatternByCondition(ref node, new Condition[] { new PropertyCondition(AutomationElement.AutomationIdProperty, "LoginButton") }, true, Pattern.Invoke);
 
-                // Introduce el correo electrónico.
+                // Enters the email address.
                 node = GetAnchor2();
                 ViewTree.RetrieveChildNodePatternByCondition(ref node, new Condition[] { new PropertyCondition(AutomationElement.AutomationIdProperty, "EmailTextBox") }, true, Pattern.Value, user);
 
-                // Introduce la contraseña.
+                // Enters the password.
                 node = GetAnchor2();
                 ViewTree.RetrieveChildNodePatternByCondition(ref node, new Condition[] { new PropertyCondition(AutomationElement.AutomationIdProperty, "PasswordBox") }, true, Pattern.Value, password);
 
-                // Antes de enviar las credenciales al servidor, la aplicación se suscribe al evento de apertura de ventana al nivel 
-                // del nodo raíz para detectar el login exitoso.
+                // Before sending login credentials to the server, we must first subscribe to the structucture changed event at the level of anchor #1.
+                // This way we detect a successful login.
                 node = GetAnchor1();
                 Automation.AddStructureChangedEventHandler(node, TreeScope.Children, structureChangedEventHandler);
 
-                // Busca e invoca el botón "Iniciar sesión" que envía el formulario.
+                // Looks for and invoke the sign in button.
                 node = GetAnchor2();
                 ViewTree.RetrieveChildNodePatternByCondition(ref node, new Condition[] { new PropertyCondition(AutomationElement.AutomationIdProperty, "SignInButton") }, true, Pattern.Invoke);
 
@@ -64,26 +64,25 @@
         }
 
         /// <summary>
-        /// Obtener en la ventana de login el nodo padre del formulario principal, desde el cual buscar los controles.
+        /// In the login window, gets the parent's parent node of main form, from which we can search controls.
         /// </summary>
-        /// <param name="setFocus">Si debe traer la ventana de login al primer plano.</param>
+        /// <param name="setFocus">Whether we must bring the login window to the foreground or not.</param>
         private AutomationElement GetAnchor1(bool setFocus = false)
         {
-            // Recupera la ventana de login.
+            // Retrieves login window.
             AutomationElement node = AutomationElement.RootElement;
             ViewTree.RetrieveChildNodePatternByCondition(ref node, new Condition[] { new PropertyCondition(AutomationElement.NameProperty, "Wunderlist") });
 
-            // Trae la ventana de login al primer plano.
+            // Brings login window to the foreground.
             if (setFocus) ViewTree.Focus(node);
 
-            // Busca el nodo de anclaje.
             return node;
         }
 
         /// <summary>
-        /// Obtener en la ventana de login el nodo padre del formulario principal, desde el cual buscar los controles.
+        /// In the login window, gets the parent node of main form, from which we can search controls.
         /// </summary>
-        /// <param name="setFocus">Si debe traer la ventana de login al primer plano.</param>
+        /// <param name="setFocus">Whether we must bring the login window to the foreground or not.</param>
         private AutomationElement GetAnchor2(bool setFocus = false)
         {
             AutomationElement node = GetAnchor1(setFocus);
@@ -93,14 +92,10 @@
         }
 
         /// <summary>
-        /// Manejador para el evento de apertura de la ventana SEO WPF.
+        /// Event handler for the structure changed event.
         /// </summary>
-        /// <param name="src">Fuente.</param>
-        /// <param name="e">Argumentos del evento.</param>
         private static void OnStructureChanged(object src, AutomationEventArgs e)
         {
-            // Si la nueva ventana abierta corresponde a la aplicación SEO WPF, señala el controlador de enventos. En este controlador
-            // está esperando el hilo principal, y cuando la señal le llega da el OK a la prueba funcional.
             if ((src as AutomationElement).Current.Name == "Wunderlist")
             {
                 eventControl?.Set();

@@ -8,7 +8,7 @@
 
 
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for MainWindow.xaml.
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -23,6 +23,9 @@
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Runs all user interface tests.
+        /// </summary>
         private async void RunUITests(object sender, RoutedEventArgs e)
         {
             AutoResetEvent eventControl = null;
@@ -31,7 +34,7 @@
             {
                 eventControl = new AutoResetEvent(false);
 
-                // Ejecuta la prueba.
+                // Runs the login test.
                 LoginUITest test = new LoginUITest(eventControl);
                 if (!test.Login())
                 {
@@ -39,27 +42,15 @@
                 }
                 else
                 {
-                    // Espera hasta que el login se haya completado, o el tiempo de espera límite es alcanzado.
+                    // Waits for the login to be completed, or the timeout is reached.
                     testSucceeded = eventControl.WaitOne(LOGIN_TIMEOUT);
-                    Thread.Sleep(5000);
                 }
             });
 
-            if (testSucceeded)
-            {
-                LoginCheck.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                LoginFail.Visibility = Visibility.Visible;
-            }
-
+            // Visual feedback.
+            LoginCheck.Visibility = testSucceeded ? Visibility.Visible : Visibility.Collapsed;
+            LoginFail.Visibility = testSucceeded ? Visibility.Collapsed : Visibility.Visible;
             LoginLabel.Foreground = new SolidColorBrush(Colors.Black);
-        }
-
-        private async Task Sleep(int time)
-        {
-            await Task.Run(() => Thread.Sleep(time));
         }
     }
 }
