@@ -1,4 +1,4 @@
-﻿namespace Pintope.ViewAutomation
+﻿namespace Pintope.Automation
 {
     using System;
     using System.Threading;
@@ -8,6 +8,9 @@
     // All possible patterns for UIAutomation.
     public enum Pattern { Window, Value, Toggle, DoubleToggle, Invoke, SelectionItem, Expand, Collapse };
 
+    /// <summary>
+    /// Helper class for retrieveing nodes and patterns.
+    /// </summary>
     public static class ViewTree
     {
         private const int DELAY = 100; // Miliseconds.
@@ -95,8 +98,8 @@
         /// <returns></returns>
         public static AutomationElementCollection RetrieveAllChildNodes(AutomationElement node, Condition[] conditions)
         {
-            AutomationElementCollection nodes = null;
-            nodes = conditions.Length > 1 ? node.FindAll(TreeScope.Children, new AndCondition(conditions)) : node.FindAll(TreeScope.Children, conditions[0]);
+            Thread.Sleep(DELAY);
+            AutomationElementCollection nodes = conditions.Length > 1 ? node.FindAll(TreeScope.Children, new AndCondition(conditions)) : node.FindAll(TreeScope.Children, conditions[0]);
 
             if (nodes == null)
             {

@@ -4,7 +4,7 @@
     using System.Threading;
     using System.Configuration;
     using System.Windows.Automation;
-    using Pintope.ViewAutomation;
+    using Pintope.Automation;
 
 
     /// <summary>
@@ -47,7 +47,7 @@
                 ViewTree.RetrieveChildNodePatternByCondition(ref node, new Condition[] { new PropertyCondition(AutomationElement.AutomationIdProperty, "PasswordBox") }, true, Pattern.Value, password);
 
                 // Before sending login credentials to the server, we must first subscribe to the structucture changed event at the level of anchor #1.
-                // This way we detect a successful login.
+                // When login is completed, the children of this node change and this way we detect our test is successful.
                 node = GetAnchor1();
                 Automation.AddStructureChangedEventHandler(node, TreeScope.Children, structureChangedEventHandler);
 
@@ -73,7 +73,7 @@
             AutomationElement node = AutomationElement.RootElement;
             ViewTree.RetrieveChildNodePatternByCondition(ref node, new Condition[] { new PropertyCondition(AutomationElement.NameProperty, "Wunderlist") });
 
-            // Brings login window to the foreground.
+            // Brings login window to the foreground when "setFocus" is true.
             if (setFocus) ViewTree.Focus(node);
 
             return node;
